@@ -23,12 +23,12 @@ function draw() {
   }
   
   let level = amp.getLevel();
-  let size = map(level, 0, 0.3, 80, min(width, height) * 0.9);
+  let diameter = map(level, 0, 0.3, 80, min(width, height) * 0.9);
   let hue = map(level, 0, 0.3, 220, 340);
   let sat = map(level, 0, 0.3, 40, 90);
   
   fill(hue, sat, 95, 0.7);
-  circle(width / 2, height / 2, size);
+  circle(width / 2, height / 2, diameter);
 }
 
 function mousePressed() {
