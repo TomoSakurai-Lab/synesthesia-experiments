@@ -27,49 +27,61 @@ function draw() {
   let spectrum = fft.analyze();
   let level = amp.getLevel();
   
-  // 対数スケールでcentroid計算 + ノイズフロア除去
+  // === 軸1: 周波数 (logCentroid) ===
   let logCentroid = 0;
   let totalEnergy = 0;
-  let noiseFloor = 8;  // この値以下は無視
+  let noiseFloor = 8;
   
-  for (let i = 2; i < spectrum.length; i++) {  // i=0,1はDC近辺なのでスキップ
+  for (let i = 2; i < spectrum.length; i++) {
     if (spectrum[i] < noiseFloor) continue;
     let logFreq = log(i);
-    let energy = spectrum[i] - noiseFloor;  // ノイズフロアを差し引く
+    let energy = spectrum[i] - noiseFloor;
     logCentroid += logFreq * energy;
     totalEnergy += energy;
   }
-  logCentroid = totalEnergy > 0 ? logCentroid / totalEnergy : 4;
+  logCentroid = totalEnergy > 0 ? logCentroid / totalEnergy : 3.2;
   
-  // 範囲を観察値に合わせて狭める
-  // 低い声 → 4付近、高い声 → 6付近、想定
-  let hue = map(logCentroid, 3.5, 6.5, 0, 280);
+  // 実測レンジ 3.2-6.0 を全色相 0-300 にマッピング
+  // 声の中も差が出るように、より広いレンジで使う
+  let hue = map(logCentroid, 3.5, 6.0, 0, 300);
   hue = constrain(hue, 0, 360);
   
-  // Spectral flatness (簡易版): ノイズ vs 音
-  let highFreqEnergy = 0;
-  let lowFreqEnergy = 0;
-  for (let i = 0; i < spectrum.length; i++) {
-    if (i < 100) lowFreqEnergy += spectrum[i];
-    else highFreqEnergy += spectrum[i];
+  // === 軸2: ノイズ性 (spectral spread) ===
+  // 音楽音 = 一部の周波数に集中、ノイズ = 全帯域に分散
+  // 標準偏差っぽく計算
+  let spread = 0;
+  if (totalEnergy > 0) {
+    for (let i = 2; i < spectrum.length; i++) {
+      if (spectrum[i] < noiseFloor) continue;
+      let logFreq = log(i);
+      let energy = spectrum[i] - noiseFloor;
+      spread += pow(logFreq - logCentroid, 2) * energy;
+    }
+    spread = sqrt(spread / totalEnergy);
   }
-  let noisiness = highFreqEnergy / (lowFreqEnergy + highFreqEnergy + 0.001);
   
-  let sat = map(noisiness, 0.3, 0.7, 90, 20);
-  sat = constrain(sat, 20, 90);
+  // 純音 → 彩度高い、ノイズ → 彩度低い
+  // 観察: 純音 spread が小さく、ノイズ spread が大きい
+  let sat = map(spread, 0.3, 1.5, 95, 20);
+  sat = constrain(sat, 20, 95);
+  
+  // 明度: 音量で変える (大きい音ほど明るく)
+  let bri = map(level, 0, 0.2, 60, 100);
+  bri = constrain(bri, 60, 100);
   
   let diameter = map(level, 0, 0.3, 80, min(width, height) * 0.9);
   
-  fill(hue, sat, 95, 0.7);
+  fill(hue, sat, bri, 0.7);
   circle(width / 2, height / 2, diameter);
   
   // デバッグ表示
   fill(0, 0, 70, 0.5);
   textSize(12);
   textAlign(LEFT);
-  text(`logCentroid: ${logCentroid.toFixed(2)}`, 20, height - 80);
+  text(`logCentroid: ${logCentroid.toFixed(2)}`, 20, height - 100);
+  text(`spread: ${spread.toFixed(2)}`, 20, height - 80);
   text(`hue: ${hue.toFixed(0)}`, 20, height - 60);
-  text(`noisiness: ${noisiness.toFixed(2)}`, 20, height - 40);
+  text(`sat: ${sat.toFixed(0)}`, 20, height - 40);
   text(`level: ${level.toFixed(3)}`, 20, height - 20);
   textAlign(CENTER);
   textSize(20);
