@@ -24,7 +24,7 @@ function draw() {
   
   let level = amp.getLevel();
   let diameter = map(level, 0, 0.3, 80, min(width, height) * 0.9);
-  let hue = map(level, 0, 0.3, 30, 90);
+  let hue = map(level, 0, 0.3, 30, 91);
   let sat = map(level, 0, 0.3, 40, 90);
   
   fill(hue, sat, 95, 0.7);
