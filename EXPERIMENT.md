@@ -1,40 +1,59 @@
-# v0.2: Sound is not a circle
+### v0.1.4 testing (2026-04-26)
 
-## Observations from v0.1
+#### Design
+Three-axis mapping:
+- Hue ← logCentroid (pitch)
+- Saturation ← spectral spread (timbre/noise)
+- Brightness ← amplitude (volume)
 
-Three things felt wrong:
+#### Measured values (AirPods Pro mic)
+| Sound | hue | sat | spread |
+|---|---|---|---|
+| Silence | 0 | 3.2 | - |
+| Low "ah" | 117 | 42 | 1.15 |
+| High "ee" | 180 | 33 | 1.28 |
+| Whistle | 290 | 72 | - |
+| Hand clap | 223 | 60 | - |
+| "Sss" | 314 | 76 | - |
 
-1. **The color is fixed in mapping** — only volume changes hue.
-   Sound has frequency, timbre, harmonic structure.
-   Mapping by amplitude alone is reductive.
+#### Results
+- ✓ Hue maps cleanly to pitch (117 → 314 across the voice/whistle range)
+- ✓ Voices now show clear color difference (delta hue = 63)
+- ✗ Saturation does not strongly differentiate noise from tone
+   (whistle 72 vs clap 60, expected larger gap)
 
-2. **The shape is a circle** — but sound isn't symmetric.
-   Sound has direction, distortion, irregularity.
-   A perfect circle smooths out everything that makes sound *sound*.
+#### Critical discovery: the microphone is not neutral
 
-3. **The spread is too even** — pulsing smoothly hides
-   the attack, the noise, the sudden bursts.
-   Sound is jagged in time. The visual should be too.
+I'm using AirPods Pro with active noise cancellation.
+ANC is designed to:
+- Suppress wide-band ambient noise
+- Enhance the human voice band (300Hz - 3kHz)
+- Apply ML-trained voice isolation
 
-## Questions for v0.2
+Which means: the input device already implements 
+"human-centric listening" before my code sees the signal.
 
-- Can frequency analysis (FFT) replace amplitude as the primary signal?
-- What shape can hold "soundness" better than a circle?
-- How do we make attacks visible without losing ambience?
+I was trying to make a machine listen like a human, 
+but the machine I'm listening through has already done that.
 
-## References to read
+This complicates the original question:
+"How do we make a machine hear like a human?"
+becomes
+"What does 'machine hearing' even mean when our machines 
+are increasingly designed to hear like humans?"
 
-- Marks, L. (1975) — On colored-hearing synesthesia: cross-modal translations of sensory dimensions.
-- Caivano, J. (1994) — Color and sound: physical and psychophysical relations.
-- (more to add)
+#### Status of the original three problems
+- [x] "Color is fixed" — solved via three-axis mapping
+- [ ] "Shape is a circle" — next
+- [ ] "Spread is even in time" — next
 
-## Plan
+#### Next experiments (deferred)
+- v0.1.5: Test with raw microphone (laptop built-in, no ANC)
+  to see what the model "really" hears
+- v0.2.0: Move from circle to non-circular form
+- v0.2.x: Add temporal jaggedness (attack detection)
 
-- v0.1.2: Add FFT, map mean frequency to hue
-- v0.1.3: Replace circle with frequency-distributed polygon
-- v0.1.4: Add attack detection for visual bursts
-- v0.2.0: Integrate all, tune
-
-## Notes
-
-[今日の作業中の気づきを随時追記]
+#### References to chase
+- Listening through processed signals — what mediated perception even is
+- Beats Studio / AirPods ANC technical papers
+- "Anthropocentric audio processing" as a research topic
