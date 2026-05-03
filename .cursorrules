@@ -1,0 +1,37 @@
+# Project: synesthesia-experiments
+
+## Context
+This is a research-art project exploring synesthetic visualization 
+of sound on the web. The author is a Japanese freelance web developer 
+aiming for MIT Media Lab.
+
+## Tech stack
+- p5.js (loaded via CDN, not npm)
+- Web Audio API (Amplitude, FFT)
+- Plain HTML/JS, no framework
+- Vite for local dev only
+
+## Code style
+- Keep code short and readable
+- Prefer explicit names over clever abbreviations  
+- Comment the WHY, not the WHAT
+- Use HSB color mode for all color work
+
+## Design philosophy
+- Browser-native: must work without installation
+- The hand of the author should remain visible
+- AI helps with implementation, not aesthetic decisions
+- Reference: Marks (1975) on cross-modal correspondence
+
+## Constraints  
+- No localStorage/sessionStorage (Vite local dev fine, but be aware)
+- Test on phone (Vercel preview) before merging to main
+- Each major change = new branch + commit
+
+## Current version
+v0.1.4 - three-axis mapping (hue/saturation/brightness)
+
+## Known issues
+- Centroid calculation skews high for noise (clap reads "blue")
+- Voice frequencies cluster in 1-2 FFT bins
+- AirPods ANC pre-processes the signal (use raw mic when possible)

@@ -1,0 +1,26 @@
+{
+  "name": "synesthesia-experiments",
+  "version": "1.0.0",
+  "description": "",
+  "main": "sketch.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TomoSakurai-Lab/synesthesia-experiments.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/TomoSakurai-Lab/synesthesia-experiments/issues"
+  },
+  "homepage": "https://github.com/TomoSakurai-Lab/synesthesia-experiments#readme",
+  "devDependencies": {
+    "vite": "^8.0.10"
+  }
+}
