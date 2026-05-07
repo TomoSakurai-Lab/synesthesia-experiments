@@ -69,19 +69,29 @@ function draw() {
   let bri = map(level, 0, 0.2, 60, 100);
   bri = constrain(bri, 60, 100);
   
-  fill(hue, sat, bri, 0.7);
+  // spectrum を 16 グループに集約
+  const NUM_VERTICES = 16;
+  const SPECTRUM_FLOOR = 30;
+  let groups = new Array(NUM_VERTICES);
+  for (let g = 0; g < NUM_VERTICES; g++) {
+    let sum = 0;
+    for (let b = 0; b < 4; b++) {
+      sum += spectrum[g * 4 + b];
+    }
+    let avg = sum / 4;
+    // 個別閾値: 閾値未満は 0 にする
+    groups[g] = avg < SPECTRUM_FLOOR ? 0 : avg;
+  }
 
-  // 円ではなく、スペクトルそのものを輪郭に。
-  // 64 頂点で spectrum[i] を半径として極座標に展開する。
-  let cx = width / 2;
-  let cy = height / 2;
-  let maxRadius = min(width, height) * 0.4;
+  // polygon 描画
+  fill(hue, sat, bri, 0.7);
+  noStroke();
   beginShape();
-  for (let i = 0; i < 64; i++) {
-    let angle = map(i, 0, 64, 0, TWO_PI);
-    let radius = map(spectrum[i], 0, 255, 0, maxRadius);
-    let x = cx + cos(angle) * radius;
-    let y = cy + sin(angle) * radius;
+  for (let g = 0; g < NUM_VERTICES; g++) {
+    let angle = map(g, 0, NUM_VERTICES, 0, TWO_PI);
+    let radius = map(groups[g], 0, 255, 0, min(width, height) * 0.4);
+    let x = width / 2 + cos(angle) * radius;
+    let y = height / 2 + sin(angle) * radius;
     vertex(x, y);
   }
   endShape(CLOSE);
