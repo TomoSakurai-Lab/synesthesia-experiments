@@ -1,0 +1,130 @@
+# Project: synesthesia-experiments
+
+## What this project is
+
+A research-art project exploring synesthetic visualization of sound 
+on the web. Started in Cebu, Philippines during English language study.
+
+The author's identity in this project: **Web-Native Synesthetic Composer** —
+making synesthetic experience accessible through the browser, 
+treating the browser itself as the instrument.
+
+Long-term goal: MIT Media Lab application in 3 years (Strategy B path:
+self-research, public record, no formal degree path).
+
+## Where we are now
+
+**Current version**: v0.1.4 (deployed to develop branch)
+
+**Three-axis mapping established**:
+- Hue ← logCentroid (pitch)
+- Saturation ← spectral spread (timbre/noise)  
+- Brightness ← amplitude (volume)
+
+**Open questions** (in order):
+- ✅ "Color is fixed" — solved via 3-axis mapping
+- 🔄 "Shape is a circle" — to address in v0.2
+- 🔄 "Spread is even in time" — to address later
+- 🔄 "ANC mic = humanized listening" — discovered Day 7, 
+   to test with raw mic in v0.1.5
+
+## Tech stack
+
+- p5.js (loaded via CDN, not npm)
+- Web Audio API (Amplitude, FFT)
+- Plain HTML/JS, no framework
+- Vite for local dev only
+- HSB color mode throughout
+- Vercel for deployment
+- GitHub for version control
+
+## File structure
+
+- `index.html`: entry point with p5.js CDN imports
+- `sketch.js`: main p5 sketch
+- `EXPERIMENT.md`: research log — hypotheses, observations, reflections
+- `vite.config.js`: dev server config (port 3000, host:true)
+- `package.json`: dependencies (vite only)
+- `.cursorrules`: this file
+- `COACHING_RULES.md`: AI usage philosophy
+
+## Code style
+
+- Short, readable
+- Comment the WHY, not the WHAT
+- Variable names explicit (no abbreviations)  
+- Use HSB color mode for all color work
+- Avoid p5.js reserved names as variables (size, width, etc.)
+
+## Branching workflow
+
+- `main`: stable, deployed to synesthesia.[domain].com
+- `develop`: ongoing experiments
+- `feature/*`: specific experiments before merging
+
+Never push directly to main without testing on develop first.
+
+## Author's working style
+
+- Operates 30-60 min/day during workdays + 2-3 hours weekends
+- Strategy B is a 3-year project — sustainability > speed
+- Has a freelance fulltime job
+- Located in Japan after Cebu language study
+- 24 years old, 高専卒, 3+ years web dev freelance experience
+
+## Reference works (for context)
+
+Academic:
+- Marks, L. E. (1975) "On Colored-Hearing Synesthesia" 
+  (Psychological Bulletin, vol. 82) — primary reference
+
+Artists:
+- Memo Akten — "Learning to See"
+- Daito Manabe / Rhizomatiks
+- Ryoji Ikeda
+- Refik Anadol
+
+## What AI does and doesn't do in this project
+
+✅ AI handles:
+- Implementation, refactoring, debugging
+- Code reviews, optimizations
+- Research summaries (when explicitly requested)
+- Boilerplate generation
+- Test setup
+- Documentation structure (not content)
+
+❌ AI does NOT handle:
+- Aesthetic decisions (color choices, animation timing, "feel")
+- Conceptual questions ("what should v0.2 be about?")
+- Twitter content (always human-written, even drafts)
+- EXPERIMENT.md observations and reflections (always human-written)
+- The "why" sections in any file
+- Decisions that shape the artistic identity
+
+## Strategy B specific rules
+
+1. **Public record is the work**: All commits, all branches, 
+   all comments are part of the artistic output.
+
+2. **Honest documentation**: When experiments fail or get
+   abandoned, document that. Don't hide.
+
+3. **Human hand visible**: After AI generates implementation,
+   the author must touch and modify it. AI output should not
+   be deployed unchanged.
+
+4. **No automation that fakes activity**: Twitter posts, 
+   commits, EXPERIMENT.md entries must all reflect actual 
+   human work that day.
+
+5. **Bridge to existing research**: When implementing 
+   something, if there's relevant academic work (e.g., Marks 1975),
+   note the connection.
+
+## When in doubt
+
+If uncertain whether to do something, ask the author first.
+Don't guess on aesthetic or conceptual decisions.
+
+For technical questions, propose a plan before implementing.
