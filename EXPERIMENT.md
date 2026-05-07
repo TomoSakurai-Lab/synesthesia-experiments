@@ -126,3 +126,64 @@ ANC は人の声を高めに処理している。さらに、コンデンサマ�
 - [ ] "Shape is a circle" — next (v0.2.0)
 - [ ] "Spread is even in time" — later
 - [ ] NEW: "Whose hearing am I visualizing?" — to explore in v0.2+
+
+## v0.2.0 first observations (2026-05-07)
+
+### Setup
+- 16 vertices polygon
+- Spectrum grouped: 64 bands → 16 groups (4 bins averaged each)
+- Per-group floor threshold: 30
+- Color logic: same as v0.1.4
+
+### What I observed
+
+1. **Fan noise persists in silence**
+   PC fan and ambient room noise still register. The polygon 
+   never fully collapses. Decided not to fight this — 
+   environmental sound is also sound.
+
+2. **Voice produces recognizable shapes**
+   Talking creates clear, visible polygons.
+
+3. **16 vertices is enough resolution**
+   The shape is readable. 8 felt too coarse (mental model: 
+   generic visualizer), 64 felt too abstract.
+
+4. **High and low frequencies produce different shape characters**
+   - High pitched sounds (whistle, sibilants): spiky shapes
+     One or two vertices spike out, rest stays small.
+     The energy concentrates in narrow bands.
+   - Low pitched sounds (low "ah", hum): fan-shaped
+     Multiple adjacent vertices grow together.
+     The energy spreads across nearby bands (harmonics + resonance).
+
+5. **Color logic intact**
+   The 3-axis HSB mapping from v0.1.4 still works correctly.
+
+### Interpretation
+
+The shape difference between high and low pitches is not 
+something I designed — it emerged from FFT spectral physics.
+Low frequencies have wider spectral distribution (harmonics, 
+formants), so neighbor bins activate together → smooth shapes.
+High frequencies have narrow spectral concentration → spikes.
+
+This is interesting because the visualization now embeds 
+information that wasn't in v0.1.4: **the spectral character 
+of sound types**. Voice ≠ whistle, even at the same loudness 
+and pitch range.
+
+### New question
+
+Could this distinction (spread vs concentrated) be made 
+explicit through visual treatment? Or is the emergent 
+difference enough?
+
+### Status update
+
+- [x] "Color is fixed" — solved (v0.1.4)
+- [x] "ANC = humanized listening" — confirmed (v0.1.5)
+- [x] "Shape is a circle" — addressed (v0.2.0)
+- [ ] "Spread is even in time" — next?
+- [ ] "Whose hearing am I visualizing?" — exploring
+- [ ] NEW: "Should spectral character be visually emphasized?"

@@ -69,10 +69,32 @@ function draw() {
   let bri = map(level, 0, 0.2, 60, 100);
   bri = constrain(bri, 60, 100);
   
-  let diameter = map(level, 0, 0.3, 80, min(width, height) * 0.9);
-  
+  // spectrum を 16 グループに集約
+  const NUM_VERTICES = 16;
+  const SPECTRUM_FLOOR = 30;
+  let groups = new Array(NUM_VERTICES);
+  for (let g = 0; g < NUM_VERTICES; g++) {
+    let sum = 0;
+    for (let b = 0; b < 4; b++) {
+      sum += spectrum[g * 4 + b];
+    }
+    let avg = sum / 4;
+    // 個別閾値: 閾値未満は 0 にする
+    groups[g] = avg < SPECTRUM_FLOOR ? 0 : avg;
+  }
+
+  // polygon 描画
   fill(hue, sat, bri, 0.7);
-  circle(width / 2, height / 2, diameter);
+  noStroke();
+  beginShape();
+  for (let g = 0; g < NUM_VERTICES; g++) {
+    let angle = map(g, 0, NUM_VERTICES, 0, TWO_PI);
+    let radius = map(groups[g], 0, 255, 0, min(width, height) * 0.4);
+    let x = width / 2 + cos(angle) * radius;
+    let y = height / 2 + sin(angle) * radius;
+    vertex(x, y);
+  }
+  endShape(CLOSE);
   
   // デバッグ表示
   fill(0, 0, 70, 0.5);
