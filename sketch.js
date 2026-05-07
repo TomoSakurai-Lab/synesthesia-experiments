@@ -69,10 +69,22 @@ function draw() {
   let bri = map(level, 0, 0.2, 60, 100);
   bri = constrain(bri, 60, 100);
   
-  let diameter = map(level, 0, 0.3, 80, min(width, height) * 0.9);
-  
   fill(hue, sat, bri, 0.7);
-  circle(width / 2, height / 2, diameter);
+
+  // 円ではなく、スペクトルそのものを輪郭に。
+  // 64 頂点で spectrum[i] を半径として極座標に展開する。
+  let cx = width / 2;
+  let cy = height / 2;
+  let maxRadius = min(width, height) * 0.4;
+  beginShape();
+  for (let i = 0; i < 64; i++) {
+    let angle = map(i, 0, 64, 0, TWO_PI);
+    let radius = map(spectrum[i], 0, 255, 0, maxRadius);
+    let x = cx + cos(angle) * radius;
+    let y = cy + sin(angle) * radius;
+    vertex(x, y);
+  }
+  endShape(CLOSE);
   
   // デバッグ表示
   fill(0, 0, 70, 0.5);
