@@ -237,3 +237,53 @@ This shifts the project from "visualizer" toward
 
 Slept after morning session — deliberate rest.
 Resuming Day 19 with these threads to pick up.
+
+## Day 18 — Understanding deepens, vision pivots (recorded Day [X])
+
+Slept after morning session, then caught a cold. 
+Recording now at ~80% recovery.
+
+### Morning understanding
+Realized I couldn't explain SPECTRUM_FLOOR in my own code.
+Worked through:
+- What centroid is (spectral center of mass)
+- spectrum/energy relationship (array = band energies)
+- FFT's role (waveform → frequency-domain energies)
+- Why log scale matches human hearing
+
+Key insight: Day 14's ANC discovery was made without fully
+understanding the math. Now the math gives it deeper meaning.
+
+### v0.3 vision pivot
+Initial: "Make every sound look beautiful"
+Self-criticism mid-morning: false. Not all sounds ARE beautiful.
+Revised: "Detect structurally beautiful sounds, amplify those"
+
+This is artistic curation, not democratic visualization.
+
+### v0.2.5 idea: composer mode
+Realized I want to *compose* the sound side, not only react 
+to mic input. p5.Oscillator could be added to test pure tones, 
+harmonics, dissonances under controlled conditions.
+
+Shifts the project from "visualizer" toward "sound + visual 
+composition" — closer to "Web-Native Synesthetic **Composer**" 
+identity.
+
+### External input: Nul-an installation
+Saw Ochiai's ヌル庵・即今叢. Fractal-style, technically impressive 
+("calculation nature" aesthetic). But cuts/breaks is not continuous
+— not my preference.
+
+What I learned about myself:
+- Prefer continuous over interrupted
+- Aesthetic = emotional connection, not just impressive
+- Aligns with v0.3 thesis: structural beauty as continuity
+
+### Strange loops as v1.0+ direction
+Hofstadter GEB-style strange loops as long-term goal:
+- Sound and visual mutually generating each other
+- Shepard-tone visual equivalent
+- Self-referential aesthetic systems
+
+Logged as v1.0+. Not for v0.3.
