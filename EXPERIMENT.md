@@ -187,3 +187,53 @@ difference enough?
 - [ ] "Spread is even in time" — next?
 - [ ] "Whose hearing am I visualizing?" — exploring
 - [ ] NEW: "Should spectral character be visually emphasized?"
+## Day 18 — Understanding deepens, vision pivots
+
+### Morning realizations
+
+Started the day fresh after Day 17's intense session.
+Noticed I couldn't explain SPECTRUM_FLOOR in my own code.
+
+Worked through:
+- What centroid actually is (spectral center of mass)
+- spectrum and energy relationship (array values = band energies)
+- FFT's role (time-domain wave → frequency-domain energies)
+- Why log scale for centroid (matches human hearing)
+
+Key insight: my Day 14 discovery about ANC compressing 
+voice pitch by 5x was found *without* fully understanding 
+the math. Now the math gives the discovery deeper meaning.
+
+### Vision update
+
+Initial v0.3 vision: "Make every sound look beautiful"
+
+Self-criticism mid-morning: this is false. Not all sounds 
+ARE beautiful. The work shouldn't pretend otherwise.
+
+Revised vision: "Detect structurally beautiful sounds 
+and amplify them visually"
+
+This is closer to what artistic curation is — selection, 
+not democratic visualization.
+
+### v0.2.5 idea (composer mode)
+
+Realized I want to *compose* the sound side, not only 
+react to mic input. p5.Oscillator could be added so 
+I can test specific tones, harmonics, dissonances.
+
+This shifts the project from "visualizer" toward 
+"sound + visual composition" — closer to the original 
+"Web-Native Synesthetic **Composer**" identity.
+
+### Open questions
+
+- What exactly counts as "structural beauty"?
+- Should detection be visible to the user or subtle?
+- v0.2.5 vs v0.3: which first?
+
+### Status
+
+Slept after morning session — deliberate rest.
+Resuming Day 19 with these threads to pick up.
