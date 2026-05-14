@@ -244,15 +244,47 @@ Slept after morning session, then caught a cold.
 Recording now at ~80% recovery.
 
 ### Morning understanding
-Realized I couldn't explain SPECTRUM_FLOOR in my own code.
-Worked through:
-- What centroid is (spectral center of mass)
-- spectrum/energy relationship (array = band energies)
-- FFT's role (waveform → frequency-domain energies)
-- Why log scale matches human hearing
 
-Key insight: Day 14's ANC discovery was made without fully
-understanding the math. Now the math gives it deeper meaning.
+Realized I couldn't explain SPECTRUM_FLOOR in my own code.
+This was a wake-up call: my v0.2.0 had AI-generated parts 
+I hadn't internalized.
+
+Spent the morning working through the foundations:
+
+**FFT (Fast Fourier Transform)** is the algorithm that 
+converts a time-domain waveform into frequency-domain energies. 
+Mathematically equivalent to what the cochlea in the human 
+ear does, but done in software.
+
+**spectrum[]** is the output array of FFT. Each index 
+corresponds to a frequency band, and the value at that 
+index is the energy in that band (0-255 range in p5.sound). 
+For my 64-bin FFT, each band covers roughly 344Hz of the 
+0-22050Hz audible range.
+
+**Spectral centroid** is the "center of mass" of the 
+spectrum: a weighted average of frequencies, weighted by 
+their energies. High centroid = high-pitched / bright. 
+Low centroid = low-pitched / dark.
+
+**logCentroid** = log(centroid). Used because human 
+hearing is logarithmic: doubling the frequency is heard 
+as "one octave higher" regardless of the starting pitch.
+
+**SPECTRUM_FLOOR = 30** is the per-band threshold. After 
+grouping the 64 bands into 16 groups and averaging each 
+group, any group with average energy < 30 is treated as 
+silence (set to 0). This suppresses persistent ambient 
+noise that would otherwise make the polygon never settle.
+
+Key insight: Day 14's ANC discovery was made *without* 
+fully understanding the math. The data showed something 
+real, but I didn't know precisely what I was measuring. 
+Now that I understand spectral centroid as a weighted 
+average, the 5x compression of voice pitch by ANC is 
+even more striking — it means ANC is actively flattening 
+the energy distribution across frequency bands, not just 
+applying a passive filter.
 
 ### v0.3 vision pivot
 Initial: "Make every sound look beautiful"
@@ -272,7 +304,7 @@ identity.
 
 ### External input: Nul-an installation
 Saw Ochiai's ヌル庵・即今叢. Fractal-style, technically impressive 
-("calculation nature" aesthetic). But cuts/breaks is not continuous
+("calculation nature" aesthetic). But cuts/breaks are not continuous
 — not my preference.
 
 What I learned about myself:
